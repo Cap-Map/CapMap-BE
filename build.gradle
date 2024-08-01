@@ -12,23 +12,28 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    // 스프링 데이터 JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'com.h2database:h2' // 인메모리 데이터베이스
-    compileOnly 'org.projectlombok:lombok' // 롬복
-    annotationProcessor 'org.projectlombok:lombok'
-    // 스프링 시큐리티를 사용하기 위한 스타터 추가
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    // 타임리프에서 스프링 시큐리티를 사용하기 위한 의존성 추가
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-    // 스프링 시큐리티를 테스트하기 위한 의존성 추가
-    testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
+    runtimeOnly 'com.h2database:h2'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
-tasks.test {
+test {
     useJUnitPlatform()
 }
