@@ -1,7 +1,10 @@
 package capmap.org.capmapBE.controller;
 
 import capmap.org.capmapBE.dto.AddUserRequest;
+import capmap.org.capmapBE.dto.LoginRequest;
+import capmap.org.capmapBE.dto.LoginResponse;
 import capmap.org.capmapBE.repository.UserRepository;
+import capmap.org.capmapBE.service.AuthService;
 import capmap.org.capmapBE.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +16,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserApiController {
 
     private final UserService userService;
+    private final AuthService authService;
     private final UserRepository userRepository;
-    public UserApiController(UserService userService, UserRepository userRepository) {
+
+    public UserApiController(UserService userService, AuthService authService, UserRepository userRepository) {
         this.userService = userService;
+        this.authService = authService;
         this.userRepository = userRepository;
     }
 
@@ -38,6 +44,12 @@ public class UserApiController {
     @GetMapping("/auth/email/{email}/exists")
     public ResponseEntity<Boolean> checkEmailDuplicate(@PathVariable String email){
         return ResponseEntity.ok(userService.checkEmailDuplication(email));
+    }
+
+    @PostMapping("/api/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+        LoginResponse loginResponse = authService.login(loginRequest.getEmail(), loginRequest.getPassword());
+        return ResponseEntity.ok(loginResponse);
     }
 
 }
