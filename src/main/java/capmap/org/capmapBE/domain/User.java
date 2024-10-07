@@ -30,10 +30,28 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "nickname", nullable = false)
+    private String nickname;
+
+    @Column(name = "profile_pic", nullable = false)
+    private int profile_pic;
+
+    @Column(name = "user_level", nullable = false)
+    private int user_level;
+
+    @Column(name = "user_caps", nullable = false)
+    private int user_caps; //유저가 모은 병 개수
+
+
     @Builder
-    public User(String email, String password, String auth) {
+    public User(String email, String password, String nickname, int profile_pic, int user_level, int user_caps,String auth) {
         this.email = email;
         this.password = password;
+        this.user_caps = user_caps;
+        this.user_level = user_level;
+        this.profile_pic = profile_pic;
+        this.nickname = nickname;
+
     }
 
 
