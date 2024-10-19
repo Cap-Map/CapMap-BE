@@ -1,6 +1,5 @@
 name: Java CI with Gradle
 
-# master 브랜치에 push, PR 이벤트 발생시 동작.
 on:
   push:
     branches: [ "main" ]
@@ -10,26 +9,29 @@ on:
 jobs:
   deploy: 
     runs-on: ubuntu-latest
+    if: github.repository == 'Cap-Map/CapMap-BE'  # 메인 레포지토리
 
     steps:
     - name: Checkout
       uses: actions/checkout@v3
     
-    # Spring Boot 어플리케이션 Build (1)
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+
     - name: Spring Boot Build
       run: ./gradlew clean build --exclude-task test
     
-    # Docker 이미지 Build (2)
-    - name: docker image build
+    - name: Docker image build
       run: docker build -t sumsum07/capmap-app .
     
-    # DockerHub Login (3)
-    - name: docker login 
+    - name: Docker login 
       uses: docker/login-action@v2
       with: 
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    # Docker Hub push (4)
-    - name: docker Hub push
+    - name: Docker Hub push
       run: docker push lucaskang134/boot-prac-ci
