@@ -1,5 +1,6 @@
 package capmap.org.capmapBE.service;
 
+import capmap.org.capmapBE.dto.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import capmap.org.capmapBE.domain.User;
 import capmap.org.capmapBE.dto.AddUserRequest;
@@ -14,6 +15,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+
 
     public Long save(AddUserRequest dto) {
         return userRepository.save(User.builder()
@@ -45,6 +48,17 @@ public class UserService {
     public boolean checkEmailDuplication(String email) {
         boolean emailDuplicate = userRepository.existsByEmail(email);
         return emailDuplicate;
+    }
+
+    public User authenticate(String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+
+        if (!user.getPassword().equals(password)) {
+            throw new IllegalArgumentException("Invalid email or password");
+        }
+
+        return user;
     }
 
 }
