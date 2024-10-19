@@ -34,4 +34,4 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Docker Hub push
-      run: docker push lucaskang134/boot-prac-ci
+      run: docker push sumsum07/capmap-app
