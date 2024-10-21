@@ -1,16 +1,16 @@
 spring:
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: update  # or validate, none, etc. depending on your use case
     properties:
       hibernate:
         format_sql: true
-    defer-datasource-initialization: true
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-  h2:
-    console:
-      enabled: true
+    url: jdbc:postgresql://<RDS-endpoint>:<port>/<database_name>  # e.g., jdbc:postgresql://db-instance.xxxxxxxxxx.us-east-1.rds.amazonaws.com:5432/mydb
+    username: <your-db-username>
+    password: <your-db-password>
+    driver-class-name: org.postgresql.Driver
 jwt:
   issuer: ajufresh@gmail.com
   secret_key: study-springboot
