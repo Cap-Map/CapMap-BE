@@ -46,7 +46,7 @@ public class UserApiController {
         return ResponseEntity.ok(userService.checkEmailDuplication(email));
     }
 
-    @PostMapping("/api/login")
+    @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         LoginResponse loginResponse = authService.login(loginRequest.getEmail(), loginRequest.getPassword());
         return ResponseEntity.ok(loginResponse);
