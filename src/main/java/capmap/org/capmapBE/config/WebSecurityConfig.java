@@ -22,7 +22,6 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer configure() {
         return (web) -> web.ignoring()
-                .requestMatchers(toH2Console())
                 .requestMatchers("/static/**");
     }
 
@@ -30,7 +29,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeRequests()
-                .requestMatchers("/hello", "/login", "/auth/user").permitAll()
+                .requestMatchers("/hello", "/login", "/auth/user", "/error").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()

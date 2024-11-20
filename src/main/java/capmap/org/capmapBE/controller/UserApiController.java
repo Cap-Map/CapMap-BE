@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
 public class UserApiController {
 
     private final UserService userService;
@@ -31,6 +32,7 @@ public class UserApiController {
             userService.save(request); // 회원 가입 메서드 호출
             return ResponseEntity.status(HttpStatus.CREATED).body("User signed up successfully");
         } catch (Exception e) {
+            e.printStackTrace(); // 예외 로깅
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User signup failed: " + e.getMessage());
         }
     }
